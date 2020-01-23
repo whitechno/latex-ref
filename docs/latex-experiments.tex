@@ -1,0 +1,423 @@
+\documentclass[]{article}
+
+\usepackage[utf8]{inputenc}
+
+% epigraph for quote at start of section
+\usepackage{epigraph}
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+\renewcommand{\epigraphsize}{\small\itshape}
+
+% for hyperlinks and URL links
+\usepackage{hyperref}
+
+% Code formatting with the listing package is highly customizable.
+\usepackage{listings}
+\usepackage{xcolor}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{python-style}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+% \usepackage{pgfplots}
+
+\title{\LaTeX{} Experiments}
+
+\author{AeAeA}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{TeX distributions}
+
+\subsection{MacTeX}
+
+The best for Mac.
+\begin{verbatim}$ brew cask install mactex\end{verbatim}
+
+\subsection{Visual Studio Code LaTeX Workshop Extension}
+
+LaTeX Workshop is an extension for Visual Studio Code, aiming 
+to provide core features for LaTeX typesetting with Visual Studio Code.
+\begin{itemize}
+    \item \url{https://github.com/James-Yu/LaTeX-Workshop}
+    \item \url{https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile}
+\end{itemize}
+Build LaTeX file by calling the command \verb|Build LaTeX project| from the\\
+Command Palette or from the TeX badge. This command is bound to \\
+\verb|Cmd+Ctrl+b|
+
+You can change VS Code settings by opening Settings tab:\\ 
+\verb|Cmd+, -> Extensions -> LaTeX| \\ 
+or, alternatively, by directly editing settings.json file:\\ 
+\verb|~/Library/Application\ Support/Code/User/settings.json| \\
+Recommended settings for LaTeX Workshop:
+\begin{verbatim}
+{
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.outDir": "%DIR%/texout",
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.autoClean.run": "onBuilt"
+}
+\end{verbatim}
+
+\subsection{MiKTeX}
+
+Not for Mac. Old MiKTeX installation:\\
+\verb+/usr/local/bin/+\\
+\verb+/Applications/MiKTeX\ Console.app/+
+
+\subsection{TinyTeX}
+
+TinyTeX - a lightweight, cross-platform, portable, and 
+easy-to-maintain \LaTeX{} distribution based on TeX Live. 
+
+Currently TinyTeX works best for R users. Installing and 
+maintaining TinyTeX is easy for R users, since the R package 
+tinytex has provided wrapper functions.
+
+For other (non-R) users:
+\begin{itemize}
+
+    \item See TinyTeX docs \href{https://yihui.org/tinytex/}{here}.
+
+    \item In the directory \\
+          \verb|~/Library/TinyTeX/texmf-dist/tex/latex/| \\
+          you can find all \LaTeX{} packages installed for TinyTeX.
+    
+    \item If you compile a LaTeX document and run into an error message 
+          like this:\\
+          \verb+! LaTeX Error: File `times.sty' not found.+ \\
+          It basically indicates a missing LaTeX package.
+
+          Use the command \verb+tlmgr search+ to find the name of 
+          the missing package:\\
+          \verb+$ tlmgr search --global --file "/times.sty"+\\
+          \verb+psnfss: texmf-dist/tex/latex/psnfss/times.sty+
+
+          In this case, the missing package is \verb+psnfss+, and we 
+          can install a package via \verb+tlmgr install+, e.g., \\
+          \verb+$ tlmgr install psnfss+
+
+          If you still see error messages that you don’t understand, 
+          you may need to update everything:\\
+          \verb+$ tlmgr update --self --all+\\
+          \verb+$ tlmgr path add+\\
+          \verb+$ fmtutil-sys --all+
+    
+    \item To uninstall TinyTeX use command line:\\
+          \verb+$ tlmgr path remove+\\
+          \verb+$ rm -r "~/Library/TinyTeX"+
+          
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Epigraph}
+
+\epigraph
+{In doing what we ought we deserve no praise, because it is our duty.}
+{--- \textup{Saint Augustine}}
+
+
+\subsection{Online docs}
+\href{http://texdoc.net/}{TeXdoc Online} is TeX and LaTeX documentation 
+lookup system.
+
+
+\subsection{verbatim}
+
+\begin{verbatim}
+Text enclosed inside 
+    \begin{verbatim} ... \end {verbatim} 
+environment                      is printed directly 
+and all \LaTeX{} commands are ignored.
+\end{verbatim}
+
+\begin{verbatim*}
+Text enclosed inside \begin{verbatim*} environment 
+    is printed directly 
+and all \LaTeX{} commands are ignored,
+and white spaces are emphasized with a special symbol.
+\end{verbatim*}
+
+Use \verb| \verb+<inline verbatim text>+ | like this:\\
+The \verb+\ldots+ command produces \ldots
+
+
+\subsection{listings: Source code printing}
+\begin{itemize}
+    \item \href
+    {http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf}
+    {listings} package documentation
+    \item \url{https://www.overleaf.com/learn/latex/Code_listing}
+\end{itemize}
+
+
+\subsubsection{minimal setup}
+
+Example of using the \verb+\begin{lstlisting}[language=Python]+ 
+environment \\
+from the \verb+\usepackage{listings}+ package to highlight Python code:
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+    
+def incmatrix(genl1,genl2):
+    m = len(genl1)
+    n = len(genl2)
+    M = None #to become the incidence matrix
+    VT = np.zeros((n*m,1), int)  #dummy variable
+    
+    #compute the bitwise xor matrix
+    M1 = bitxormatrix(genl1)
+    M2 = np.triu(bitxormatrix(genl2),1) 
+    
+    for i in range(m-1):
+        for j in range(i+1, m):
+            [r,c] = np.where(M2 == M1[i,j])
+            for k in range(len(r)):
+                VT[(i)*n + r[k]] = 1;
+                VT[(i)*n + c[k]] = 1;
+                VT[(j)*n + r[k]] = 1;
+                VT[(j)*n + c[k]] = 1;
+    
+                if M is None:
+                    M = np.copy(VT)
+                else:
+                    M = np.concatenate((M, VT), 1)
+    
+                VT = np.zeros((n*m,1), int)
+    
+    return M
+\end{lstlisting}
+
+
+\subsubsection{with code styles and colours}
+
+You need \verb+\usepackage{xcolor}+ package for the code colouring. \\
+Just like in floats (tables and figures), captions can be added to a 
+listing for a more clear presentation. This caption can be later used 
+in the list of Listings \verb+\lstlistoflistings+.
+
+\lstset{style=python-style}
+\begin{lstlisting}[language=Python, caption=Python example]
+import numpy as np
+    
+def incmatrix(genl1,genl2):
+    m = len(genl1)
+    n = len(genl2)
+    M = None #to become the incidence matrix
+    VT = np.zeros((n*m,1), int)  #dummy variable
+    
+    #compute the bitwise xor matrix
+    M1 = bitxormatrix(genl1)
+    M2 = np.triu(bitxormatrix(genl2),1) 
+    
+    for i in range(m-1):
+        for j in range(i+1, m):
+            [r,c] = np.where(M2 == M1[i,j])
+            for k in range(len(r)):
+                VT[(i)*n + r[k]] = 1;
+                VT[(i)*n + c[k]] = 1;
+                VT[(j)*n + r[k]] = 1;
+                VT[(j)*n + c[k]] = 1;
+    
+                if M is None:
+                    M = np.copy(VT)
+                else:
+                    M = np.concatenate((M, VT), 1)
+    
+                VT = np.zeros((n*m,1), int)
+    
+    return M
+\end{lstlisting}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Picture environment}
+
+\begin{itemize}
+    \item \url{https://en.wikibooks.org/wiki/LaTeX/Picture}
+    \item \url{https://www.overleaf.com/learn/latex/Picture_environment}
+\end{itemize}
+
+\vspace{5mm}
+
+\setlength{\unitlength}{1cm}
+\thicklines
+\begin{picture}(10,6)
+
+\put(0,0){\line(0,1){6}}
+\put(0,0){\line(1,0){10}}
+\put(10,0){\line(0,1){6}}
+\put(0,6){\line(1,0){10}}
+
+\put(0,1){\circle{1}}
+\put(0,1){\circle*{2}}
+\put(0,1){\oval(10,1.4)[r]}
+\end{picture}
+
+\vspace{5mm}
+
+The components of the direction vector \verb+(x1,y1)+ 
+of the line segment \\
+\verb+\line(x1,y1){length}+ are restricted to the integers 
+$(-6,-5, ... , 5,6)$ 
+and they have to be coprime. 
+The figure below illustrates all 25 possible slope values 
+in the first quadrant.
+
+\vspace{5mm}
+
+\setlength{\unitlength}{5cm}
+\begin{picture}(1,1)
+    \put(0,0){\line(0,1){1}}
+    \put(0,0){\line(1,0){1}}
+    \put(0,0){\line(1,1){1}}
+    \put(0,0){\line(1,2){.5}}
+    \put(0,0){\line(1,3){.3333}}
+    \put(0,0){\line(1,4){.25}}
+    \put(0,0){\line(1,5){.2}}
+    \put(0,0){\line(1,6){.1667}}
+    \put(0,0){\line(2,1){1}}
+    \put(0,0){\line(2,3){.6667}}
+    \put(0,0){\line(2,5){.4}}
+    \put(0,0){\line(3,1){1}}
+    \put(0,0){\line(3,2){1}}
+    \put(0,0){\line(3,4){.75}}
+    \put(0,0){\line(3,5){.6}}
+    \put(0,0){\line(4,1){1}}
+    \put(0,0){\line(4,3){1}}
+    \put(0,0){\line(4,5){.8}}
+    \put(0,0){\line(5,1){1}}
+    \put(0,0){\line(5,2){1}}
+    \put(0,0){\line(5,3){1}}
+    \put(0,0){\line(5,4){1}}
+    \put(0,0){\line(5,6){.8333}}
+    \put(0,0){\line(6,1){1}}
+    \put(0,0){\line(6,5){1}}
+\end{picture}
+
+\vspace{5mm}
+
+The picture environment only admits diameters up to 
+approximately 14mm, and even below this limit, not all 
+diameters are possible.
+
+\setlength{\unitlength}{1mm}
+\begin{picture}(60, 40)
+    \put(20,30){\circle{1}}
+    \put(20,30){\circle{2}}
+    \put(20,30){\circle{4}}
+    \put(20,30){\circle{8}}
+    \put(20,30){\circle{16}}
+    \put(20,30){\circle{32}}
+    \put(40,30){\circle{1}}
+    \put(40,30){\circle{2}}
+    \put(40,30){\circle{3}}
+    \put(40,30){\circle{4}}
+    \put(40,30){\circle{5}}
+    \put(40,30){\circle{6}}
+    \put(40,30){\circle{7}}
+    \put(40,30){\circle{8}}
+    \put(40,30){\circle{9}}
+    \put(40,30){\circle{10}}
+    \put(40,30){\circle{11}}
+    \put(40,30){\circle{12}}
+    \put(40,30){\circle{13}}
+    \put(40,30){\circle{14}}
+    \put(15,10){\circle*{1}}
+    \put(20,10){\circle*{2}}
+    \put(25,10){\circle*{3}}
+    \put(30,10){\circle*{4}}
+    \put(35,10){\circle*{5}}
+\end{picture}
+
+\newpage
+
+\setlength{\unitlength}{1cm}
+\begin{picture}(11,4)
+    \put(0,0){\circle*{0.5}}
+    \put(11,0){\circle*{0.5}}
+    \put(0,4){\circle*{0.5}}
+    \put(11,4){\circle*{0.5}}
+
+\thicklines
+    \put(8,3.3){{\footnotesize $3$-simplex}}
+    \put(9,3){\circle*{0.1}}
+    \put(8.3,2.9){$a_2$}
+    \put(8,1){\circle*{0.1}}
+    \put(7.7,0.5){$a_0$}
+    \put(10,1){\circle*{0.1}}
+    \put(9.7,0.5){$a_1$}
+    \put(11,1.66){\circle*{0.1}}
+    \put(11.1,1.5){$a_3$}
+    \put(9,3){\line(3,-2){2}}
+    \put(10,1){\line(3,2){1}}
+    \put(8,1){\line(1,0){2}}
+    \put(8,1){\line(1,2){1}}
+    \put(10,1){\line(-1,2){1}}
+\end{picture}
+
+\vspace{20mm}
+
+\setlength{\unitlength}{0.20mm}
+\begin{picture}(400,250)
+    \put(75,10){\line(1,0){130}}
+    \put(75,50){\line(1,0){130}}
+    \put(75,200){\line(1,0){130}}
+    \put(120,200){\vector(0,-1){150}}
+    \put(190,200){\vector(0,-1){190}}
+    \put(97,120){$\alpha$}
+    \put(170,120){$\beta$}
+    \put(220,195){upper state}
+    \put(220,45){lower state 1}
+    \put(220,5){lower state 2}
+\end{picture}
+
+\vspace{20mm}
+
+\setlength{\unitlength}{0.8cm}
+\begin{picture}(10,5)
+\thicklines
+
+% Bézier curves
+\qbezier(1,1)(5,5)(9,0.5)
+\put(2,1){{Bézier curve}}
+
+\put(1,1){\circle*{0.2}} % start point
+\put(5,5){\circle*{0.2}} % control point
+\put(9,0.5){\circle*{0.2}} % endpoint
+
+\end{picture}
+
+
+\newpage
+
+\lstlistoflistings
+
+\end{document}
