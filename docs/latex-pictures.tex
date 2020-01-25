@@ -1,5 +1,9 @@
 \documentclass[]{article}
 
+\usepackage{layout} % To print the current details plus the layout shape
+
+\usepackage{showframe} % To render a frame marking the margins 
+
 % for hyperlinks and URL links
 \usepackage{hyperref}
 
@@ -13,7 +17,7 @@ Part II: Pictures
 
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%==============================================================================
 \section{Picture environment}
 
 \begin{itemize}
@@ -21,27 +25,30 @@ Part II: Pictures
     \item \url{https://www.overleaf.com/learn/latex/Picture_environment}
 \end{itemize}
 
-\vspace{5mm}
+\vfill
 
 \setlength{\unitlength}{1cm}
-\thicklines
-\begin{picture}(10,6)
+\begin{picture}(11,6)
+    \thicklines
+    \put(0,0){\circle*{0.2}}
 
-\put(0,0){\line(0,1){6}}
-\put(0,0){\line(1,0){10}}
-\put(10,0){\line(0,1){6}}
-\put(0,6){\line(1,0){10}}
+    \put(0,0){\line(0,1){6}} % left
+    \put(0,0){\line(1,0){11}} % bottom
+    \put(11,0){\line(0,1){6}} % right
+    \put(0,6){\line(1,0){11}} % top
 
-\put(0,1){\circle{2}} % max 14mm 
-\put(0,1){\oval(10,1.4)[r]}
+    \put(0,1){\circle{1,4}} % max 14mm 
+    \put(0,1){\oval(10,1.4)[r]}
 
-\put(0,1){\circle*{1}} % max 5mm
-\put(0,1){\oval(10,0.5)[r]}
+    \put(0,1){\circle*{1}} % max 5mm
+    \put(0,1){\oval(10,0.5)[r]}
 \end{picture}
 
 \newpage
 
+%--------------------------------------
 \subsection{line}
+\begin{verbatim}\put(x,y){\line(x1,y1){length}}\end{verbatim}
 The components of the direction vector \verb+(x1,y1)+ 
 of the line segment \\
 \verb+\line(x1,y1){length}+ are restricted to the integers 
@@ -51,7 +58,6 @@ The figure below illustrates all 25 possible slope values
 in the first quadrant.
 
 \vspace{5mm}
-
 \setlength{\unitlength}{5cm}
 \begin{picture}(1,1)
     \put(1,0){\line(0,1){1}} % right vertical
@@ -80,12 +86,39 @@ in the first quadrant.
     \put(0,0){\line(6,1){1}}
     \put(0,0){\line(6,5){1}}
 \end{picture}
+\vspace{5mm}
 
+%--------------------------------------
+\subsection{vector}
+For vectors, the components of the direction vector are even more 
+narrowly restricted than for line segments, namely to the integers 
+$(-4,-3, ... , 3,4)$. Components also have to be coprime. 
+Notice the effect of the \verb+\thicklines+ command on the two arrows 
+pointing to the upper left.
 
+\vspace{5mm}
+\setlength{\unitlength}{0.75mm}
+\begin{picture}(60,40)
+\thinlines
+    \put(30,20){\vector(1,0){30}}
+    \put(30,20){\vector(4,1){20}}
+    \put(30,20){\vector(3,1){25}}
+    \put(30,20){\vector(2,1){30}}
+    \put(30,20){\vector(1,2){10}}
+\thicklines
+    \put(30,20){\vector(-4,1){30}}
+    \put(30,20){\vector(-1,4){5}}
+\thinlines
+    \put(30,20){\vector(-1,-1){5}}
+    \put(30,20){\vector(-1,-4){5}}
+\end{picture}
+\vspace{5mm}
+
+%--------------------------------------
 \subsection{circle}
-The picture environment only admits diameters up to 
-approximately 14mm, and even below this limit, not all 
-diameters are possible.
+The picture environment only admits diameters up to approximately 14mm 
+(40pt) for circles and 5mm (14.2pt) for disks, and even below this limit, 
+not all diameters are possible.
 
 \setlength{\unitlength}{1mm}
 \begin{picture}(65, 40)
@@ -115,17 +148,31 @@ diameters are possible.
 
 \newpage
 
-\subsection{vector and qbezier}
+%--------------------------------------
+\subsection{layout, vector and qbezier}
+
+\vspace{5mm}
+\setlength{\unitlength}{1pt}
+\begin{picture}(345,20)
+    \put(0,0){\circle*{5}}
+    \put(345,0){\circle*{5}}
+    \put(0,20){\circle*{5}}
+    \put(345,20){\circle*{5}}
+\end{picture}
 \vspace{5mm}
 
+Above is the the picture in first paragraph (no indent), below is picture 
+in next paragraph (with indent).
+
+\vspace{5mm}
 \setlength{\unitlength}{1cm}
 \begin{picture}(11,4)
-    \put(0,0){\circle*{0.5}}
-    \put(11,0){\circle*{0.5}}
-    \put(0,4){\circle*{0.5}}
-    \put(11,4){\circle*{0.5}}
+    \put(0,0){\circle*{0.2}}
+    \put(11,0){\circle*{0.2}}
+    \put(0,4){\circle*{0.2}}
+    \put(11,4){\circle*{0.2}}
 
-\thicklines
+    \thicklines
     \put(8,3.3){{\footnotesize $3$-simplex}}
     \put(9,3){\circle*{0.1}}
     \put(8.3,2.9){$a_2$}
@@ -141,11 +188,21 @@ diameters are possible.
     \put(8,1){\line(1,2){1}}
     \put(10,1){\line(-1,2){1}}
 \end{picture}
+\vspace{5mm}
 
-\vspace{20mm}
+\noindent Some text to demonstrate different effect of 
+\verb+\noindent+ on text (here) and on picture (above and below). 
+Compare the four corner dots for pictures above and below.
 
+\vspace{5mm}
+\noindent
 \setlength{\unitlength}{0.20mm}
 \begin{picture}(400,250)
+    \put(0,0){\circle*{10}}
+    \put(400,0){\circle*{10}}
+    \put(0,250){\circle*{10}}
+    \put(400,250){\circle*{10}}
+
     \put(75,10){\line(1,0){130}}
     \put(75,50){\line(1,0){130}}
     \put(75,200){\line(1,0){130}}
@@ -157,25 +214,42 @@ diameters are possible.
     \put(220,45){lower state 1}
     \put(220,5){lower state 2}
 \end{picture}
+\vspace{5mm}
 
-\vspace{20mm}
+Regular paragraph (without \verb+\noindent+).
 
+\vspace{5mm}
 \setlength{\unitlength}{0.8cm}
 \begin{picture}(10,5)
-\thicklines
+    \put(0,0){\circle*{0.3}}
+    \put(10,0){\circle*{0.3}}
+    \put(0,5){\circle*{0.3}}
+    \put(10,5){\circle*{0.3}}
 
-% Bézier curves
-\qbezier(1,3)(7,5)(9,0.5)
+    \thicklines
 
-\put(1,3){\circle*{0.2}} % start point
-\put(1,2.5){{\footnotesize start}}
-\put(7,5){\circle*{0.2}} % control point
-\put(6.5,4.5){{\footnotesize control}}
-\put(9,0.5){\circle*{0.2}} % end point
-\put(8,0.5){{\footnotesize end}}
+    % Bézier curves
+    \qbezier(1,3)(7,5)(9,0.5)
 
-\put(3,1){{Bézier curve}}
+    \put(1,3){\circle*{0.2}} % start point
+    \put(1,2.5){{\footnotesize start}}
+    \put(7,5){\circle*{0.2}} % control point
+    \put(6.5,4.5){{\footnotesize control}}
+    \put(9,0.5){\circle*{0.2}} % end point
+    \put(8,0.5){{\footnotesize end}}
+
+    \put(3,1){{Bézier curve}}
 
 \end{picture}
+
+
+\newpage
+
+The current page layout picture below is generated by calling command\\ 
+\verb+\layout*+ from \verb+\usepackage{layout}+.\footnote{An example footnote.}
+
+\vspace{5mm}
+
+\layout*
 
 \end{document}
