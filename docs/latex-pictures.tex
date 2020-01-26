@@ -23,6 +23,7 @@ Part II: Pictures
 \begin{itemize}
     \item \url{https://en.wikibooks.org/wiki/LaTeX/Picture}
     \item \url{https://www.overleaf.com/learn/latex/Picture_environment}
+    \item The default value of \verb+\unitlength+ is 1pt.
 \end{itemize}
 
 \vfill
@@ -37,7 +38,7 @@ Part II: Pictures
     \put(11,0){\line(0,1){6}} % right
     \put(0,6){\line(1,0){11}} % top
 
-    \put(0,1){\circle{1,4}} % max 14mm 
+    \put(0,1){\circle{1.4}} % max 14mm 
     \put(0,1){\oval(10,1.4)[r]}
 
     \put(0,1){\circle*{1}} % max 5mm
@@ -47,122 +48,83 @@ Part II: Pictures
 \newpage
 
 %--------------------------------------
-\subsection{line}
-\begin{verbatim}\put(x,y){\line(x1,y1){length}}\end{verbatim}
-The components of the direction vector \verb+(x1,y1)+ 
-of the line segment \\
-\verb+\line(x1,y1){length}+ are restricted to the integers 
-$(-6,-5, ... , 5,6)$ 
-and they have to be coprime. 
-The figure below illustrates all 25 possible slope values 
-in the first quadrant.
-
-\vspace{5mm}
-\setlength{\unitlength}{5cm}
-\begin{picture}(1,1)
-    \put(1,0){\line(0,1){1}} % right vertical
-    \put(0,1){\line(1,0){1}} % top horizontal
-    \put(0,0){\line(1,1){1.05}} % diagonal
-    \put(0,0){\line(1,2){.5}}
-    \put(0,0){\line(1,3){.3333}}
-    \put(0,0){\line(1,4){.25}}
-    \put(0,0){\line(1,5){.2}}
-    \put(0,0){\line(1,6){.1667}}
-    \put(0,0){\line(2,1){1}}
-    \put(0,0){\line(2,3){.6667}}
-    \put(0,0){\line(2,5){.4}}
-    \put(0,0){\line(3,1){1}}
-    \put(0,0){\line(3,2){1}}
-    \put(0,0){\line(3,4){.75}}
-    \put(0,0){\line(3,5){.6}}
-    \put(0,0){\line(4,1){1}}
-    \put(0,0){\line(4,3){1}}
-    \put(0,0){\line(4,5){.8}}
-    \put(0,0){\line(5,1){1}}
-    \put(0,0){\line(5,2){1}}
-    \put(0,0){\line(5,3){1}}
-    \put(0,0){\line(5,4){1}}
-    \put(0,0){\line(5,6){.8333}}
-    \put(0,0){\line(6,1){1}}
-    \put(0,0){\line(6,5){1}}
-\end{picture}
-\vspace{5mm}
-
-%--------------------------------------
-\subsection{vector}
-For vectors, the components of the direction vector are even more 
-narrowly restricted than for line segments, namely to the integers 
-$(-4,-3, ... , 3,4)$. Components also have to be coprime. 
-Notice the effect of the \verb+\thicklines+ command on the two arrows 
-pointing to the upper left.
-
-\vspace{5mm}
-\setlength{\unitlength}{0.75mm}
-\begin{picture}(60,40)
-\thinlines
-    \put(30,20){\vector(1,0){30}}
-    \put(30,20){\vector(4,1){20}}
-    \put(30,20){\vector(3,1){25}}
-    \put(30,20){\vector(2,1){30}}
-    \put(30,20){\vector(1,2){10}}
-\thicklines
-    \put(30,20){\vector(-4,1){30}}
-    \put(30,20){\vector(-1,4){5}}
-\thinlines
-    \put(30,20){\vector(-1,-1){5}}
-    \put(30,20){\vector(-1,-4){5}}
-\end{picture}
-\vspace{5mm}
-
-%--------------------------------------
-\subsection{circle}
-The picture environment only admits diameters up to approximately 14mm 
-(40pt) for circles and 5mm (14.2pt) for disks, and even below this limit, 
-not all diameters are possible.
-
-\setlength{\unitlength}{1mm}
-\begin{picture}(65, 40)
-    \put(1,30){\circle{1}}
-    \put(3,30){\circle{2}}
-    \put(6,30){\circle{3}}
-    \put(10,30){\circle{4}}
-    \put(15,30){\circle{5}}
-    \put(21,30){\circle{6}}
-    \put(28,30){\circle{7}}
-    \put(36,30){\circle{8}}
-    \put(45,30){\circle{9}}
-    \put(55,30){\circle{10}}
-    \put(55,20){\circle{10}}
-    \put(44,20){\circle{11}}
-    \put(32,20){\circle{12}}
-    \put(19,20){\circle{13}}
-    \put(5,20){\circle{14}}
-    \put(5,15){\circle{15}} % cannot be > 14mm
-    \put(21,5){\circle*{1}}
-    \put(23,5){\circle*{2}}
-    \put(26,5){\circle*{3}}
-    \put(30,5){\circle*{4}}
-    \put(35,5){\circle*{5}}
-    \put(40,5){\circle*{6}} % cannot be > 5mm
-\end{picture}
-
-\newpage
-
-%--------------------------------------
-\subsection{layout, vector and qbezier}
+\subsection{layout and several examples}
 
 \vspace{5mm}
 \setlength{\unitlength}{1pt}
-\begin{picture}(345,20)
+\begin{picture}(345,40)
     \put(0,0){\circle*{5}}
     \put(345,0){\circle*{5}}
-    \put(0,20){\circle*{5}}
-    \put(345,20){\circle*{5}}
+    \put(0,40){\circle*{5}}
+    \put(345,40){\circle*{5}}
+
+    \put(5,20){\circle{1}}
+    \put(7,20){\circle{2}}
+    \put(10,20){\circle{3}}
+    \put(14,20){\circle{4}}
+    \put(19,20){\circle{5}}
+    \put(25,20){\circle{6}}
+    \put(32,20){\circle{7}}
+    \put(40,20){\circle{8}}
+    \put(49,20){\circle{9}}
+    \put(59,20){\circle{10}}
+
+    \put(70,20){\circle{11}}
+    \put(82,20){\circle{12}}
+    \put(95,20){\circle{13}}
+    \put(109,20){\circle{14}}
+    \put(124,20){\circle{15}}
+    \put(140,20){\circle{16}}
+    \put(157,20){\circle{17}}
+    \put(175,20){\circle{18}}
+    \put(194,20){\circle{19}}
+    \put(214,20){\circle{20}}
+
+    \put(239,20){\circle{25}}
+    \put(269,20){\circle{30}}
+    \put(304,20){\circle{35}}
+    \put(344,20){\circle{40}}
+
+    \put(0,20){\circle{41}} % cannot be > 40
 \end{picture}
 \vspace{5mm}
 
 Above is the the picture in first paragraph (no indent), below is picture 
 in next paragraph (with indent).
+
+\vspace{5mm}
+\setlength{\unitlength}{1pt}
+\begin{picture}(330,20)
+    \put(0,0){\circle*{5}}
+    \put(330,0){\circle*{5}}
+    \put(0,20){\circle*{5}}
+    \put(330,20){\circle*{5}}
+
+    \put(0,3){\line(1,0){330}}
+    \put(0,17){\line(1,0){330}}
+
+    \put(5,10){\circle*{1}}
+    \put(7,10){\circle*{2}}
+    \put(10,10){\circle*{3}}
+    \put(14,10){\circle*{4}}
+    \put(19,10){\circle*{5}}
+    \put(25,10){\circle*{6}}
+    \put(32,10){\circle*{7}}
+    \put(40,10){\circle*{8}}
+    \put(49,10){\circle*{9}}
+    \put(59,10){\circle*{10}}
+
+    \put(70,10){\circle*{11}}
+    \put(82,10){\circle*{12}}
+    \put(95,10){\circle*{13}}
+    \put(109,10){\circle*{14}}
+    \put(124,10){\circle*{15}} % cannot be > 14pt
+
+    \put(150,10){\circle*{16}}
+    \put(165,10){\circle*{17}}
+    \put(180,10){\circle*{20}}
+\end{picture}
+\vspace{5mm}
 
 \vspace{5mm}
 \setlength{\unitlength}{1cm}
@@ -191,7 +153,8 @@ in next paragraph (with indent).
 \vspace{5mm}
 
 \noindent Some text to demonstrate different effect of 
-\verb+\noindent+ on text (here) and on picture (above and below). 
+\verb+\noindent+ on text (here) and on picture (above without 
+\verb+\noindent+ and below with \verb+\noindent+). 
 Compare the four corner dots for pictures above and below.
 
 \vspace{5mm}
@@ -242,14 +205,180 @@ Regular paragraph (without \verb+\noindent+).
 
 \end{picture}
 
-
 \newpage
 
-The current page layout picture below is generated by calling command\\ 
-\verb+\layout*+ from \verb+\usepackage{layout}+.\footnote{An example footnote.}
+%--------------------------------------
+\subsection{line}
+\begin{verbatim}\put(x,y){\line(x1,y1){length}}\end{verbatim}
+The components of the direction vector \verb+(x1,y1)+ 
+of the line segment \\
+\verb+\line(x1,y1){length}+ are restricted to the integers 
+$(-6,-5, ... , 5,6)$ 
+and they have to be coprime. 
+The figure below illustrates all 25 possible slope values 
+in the first quadrant.
 
 \vspace{5mm}
+\setlength{\unitlength}{5cm}
+\begin{picture}(1,1)
+    \put(0,0){\circle*{0.02}}
+    \put(1,0){\circle*{0.02}}
+    \put(0,1){\circle*{0.02}}
+    \put(1,1){\circle*{0.02}}
 
-\layout*
+    \put(1,0){\line(0,1){1}} % right vertical
+    \put(0,1){\line(1,0){3}} % top horizontal
+    \put(0,0){\line(1,1){3}} % diagonal
+    \put(0,0){\line(1,2){.5}}
+    \put(0,0){\line(1,3){.3333}}
+    \put(0,0){\line(1,4){.25}}
+    \put(0,0){\line(1,5){.2}}
+    \put(0,0){\line(1,6){.1667}}
+    \put(0,0){\line(2,1){1}}
+    \put(0,0){\line(2,3){.6667}}
+    \put(0,0){\line(2,5){.4}}
+    \put(0,0){\line(3,1){1}}
+    \put(0,0){\line(3,2){1}}
+    \put(0,0){\line(3,4){.75}}
+    \put(0,0){\line(3,5){.6}}
+    \put(0,0){\line(4,1){1}}
+    \put(0,0){\line(4,3){1}}
+    \put(0,0){\line(4,5){.8}}
+    \put(0,0){\line(5,1){1}}
+    \put(0,0){\line(5,2){1}}
+    \put(0,0){\line(5,3){1}}
+    \put(0,0){\line(5,4){1}}
+    \put(0,0){\line(5,6){.8333}}
+    \put(0,0){\line(6,1){1}}
+    \put(0,0){\line(6,5){1}}
+\end{picture}
+\vspace{5mm}
+
+%--------------------------------------
+\subsection{vector}
+\begin{verbatim}\put(x,y){\vector(x1,y1){length}}\end{verbatim}
+For vectors, the components of the direction vector are even more 
+narrowly restricted than for line segments, namely to the integers 
+$(-4,-3, ... , 3,4)$. Components also have to be coprime. 
+Notice the effect of the \verb+\thicklines+ command on the two arrows 
+pointing to the upper left.
+
+\vspace{5mm}
+\setlength{\unitlength}{0.75mm}
+\begin{picture}(60,40)
+    \put(0,0){\circle*{1}}
+    \put(60,0){\circle*{1}}
+    \put(0,40){\circle*{1}}
+    \put(60,40){\circle*{1}}
+\thinlines
+    \put(30,20){\vector(0,1){20}} % vertical up
+
+    \put(30,20){\vector(1,0){20}}
+    \put(30,20){\vector(4,1){20}}
+    \put(30,20){\vector(3,1){20}}
+    \put(30,20){\vector(2,1){20}}
+    \put(30,20){\vector(3,2){20}}
+    \put(30,20){\vector(4,3){20}}
+    \put(30,20){\vector(1,1){20}}
+
+    \put(30,20){\vector(1,2){10}}
+
+\thicklines
+    \put(30,20){\vector(-4,1){30}}
+    \put(30,20){\vector(-1,4){5}}
+\thinlines
+    \put(30,20){\vector(-1,-1){20}}
+    \put(30,20){\vector(-1,-4){5}}
+\end{picture}
+\vspace{5mm}
+
+%--------------------------------------
+\subsection{circle}
+\begin{verbatim}\put(x,y){\circle{diameter}}\end{verbatim}
+The picture environment only admits diameters up to approximately 14mm 
+(40pt) for circles and 5mm (14pt) for disks, and even below this limit, 
+not all diameters are possible.
+
+\vspace{5mm}
+\setlength{\unitlength}{1mm}
+\begin{picture}(65, 40)
+    \put(0,0){\circle*{1}}
+    \put(65,0){\circle*{1}}
+    \put(0,40){\circle*{1}}
+    \put(65,40){\circle*{1}}
+
+    \put(1,30){\circle{1}}
+    \put(3,30){\circle{2}}
+    \put(6,30){\circle{3}}
+    \put(10,30){\circle{4}}
+    \put(15,30){\circle{5}}
+    \put(21,30){\circle{6}}
+    \put(28,30){\circle{7}}
+    \put(36,30){\circle{8}}
+    \put(45,30){\circle{9}}
+    \put(55,30){\circle{10}}
+    \put(55,20){\circle{10}}
+    \put(44,20){\circle{11}}
+    \put(32,20){\circle{12}}
+    \put(19,20){\circle{13}}
+    \put(5,20){\circle{14}}
+    \put(5,15){\circle{15}} % cannot be > 14mm
+    \put(21,5){\circle*{1}}
+    \put(23,5){\circle*{2}}
+    \put(26,5){\circle*{3}}
+    \put(30,5){\circle*{4}}
+    \put(35,5){\circle*{5}}
+    \put(40,5){\circle*{6}} % cannot be > 5mm
+\end{picture}
+\vspace{5mm}
+
+%--------------------------------------
+\subsection{Text and formulae}
+
+\vspace{5mm}
+\setlength{\unitlength}{0.8cm}
+\begin{picture}(6,5)
+    \put(0,0){\circle*{0.1}}
+    \put(6,0){\circle*{0.1}}
+    \put(0,5){\circle*{0.1}}
+    \put(6,5){\circle*{0.1}}
+
+\thicklines
+    \put(1,0.5){\line(2,1){3}}
+    \put(4,2){\line(-2,1){2}}
+    \put(2,3){\line(-2,-5){1}}
+    \put(0.7,0.3){$A$}
+    \put(4.05,1.9){$B$}
+    \put(1.7,2.95){$C$}
+    \put(3.1,2.5){$a$}
+    \put(1.3,1.7){$b$}
+    \put(2.5,1.05){$c$}
+    \put(0.3,4){$F=\sqrt{s(s-a)(s-b)(s-c)}$}
+    \put(3.5,0.4){$\displaystyle s:=\frac{a+b+c}{2}$}
+\end{picture}
+\vspace{5mm}
+
+%--------------------------------------
+\subsection{multiput}
+\begin{verbatim}\multiput(x,y)(dx,dy){n}{object}\end{verbatim}
+
+\vspace{5mm}
+\setlength{\unitlength}{2mm}
+\begin{picture}(30,20)
+    \put(0,0){\circle*{0.5}}
+    \put(30,0){\circle*{0.5}}
+    \put(0,20){\circle*{0.5}}
+    \put(30,20){\circle*{0.5}}
+
+\linethickness{0.5pt}
+    \multiput(0,0)(1,0){31}{\line(0,1){20}}
+    \multiput(0,0)(0,1){21}{\line(1,0){25}}
+
+\linethickness{1pt}
+    \multiput(0,0)(5,0){6}{\line(0,1){20}}
+    \multiput(0,0)(0,5){5}{\line(1,0){25}}
+
+\end{picture}
+\vspace{5mm}
 
 \end{document}
