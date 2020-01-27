@@ -25,6 +25,11 @@ Part II: Pictures
     \item \url{https://www.overleaf.com/learn/latex/Picture_environment}
     \item The default value of \verb+\unitlength+ is 1pt.
 \end{itemize}
+Picture is the standard tool to create figures in \LaTeX. 
+This tool is sometimes too restrictive and cumbersome to work with, 
+but it's supported by most of the compilers and no extra packages 
+are needed. If you need to create complex figures, for more 
+suitable and powerful tools see the TikZ and Pgfplots packages.
 
 \vfill
 
@@ -270,10 +275,12 @@ pointing to the upper left.
     \put(60,0){\circle*{1}}
     \put(0,40){\circle*{1}}
     \put(60,40){\circle*{1}}
-\thinlines
-    \put(30,20){\vector(0,1){20}} % vertical up
 
-    \put(30,20){\vector(1,0){20}}
+\thinlines
+    \put(30,20){\vector(0,1){257}} % vertical up to the border
+    \put(30,20){\vector(1,0){187}} % horizontal right to the border
+
+    % all possible angles between 0 and 45 degrees:
     \put(30,20){\vector(4,1){20}}
     \put(30,20){\vector(3,1){20}}
     \put(30,20){\vector(2,1){20}}
@@ -281,14 +288,11 @@ pointing to the upper left.
     \put(30,20){\vector(4,3){20}}
     \put(30,20){\vector(1,1){20}}
 
-    \put(30,20){\vector(1,2){10}}
-
 \thicklines
     \put(30,20){\vector(-4,1){30}}
     \put(30,20){\vector(-1,4){5}}
 \thinlines
-    \put(30,20){\vector(-1,-1){20}}
-    \put(30,20){\vector(-1,-4){5}}
+    \put(30,20){\vector(-1,-1){100}} % goes to the page border
 \end{picture}
 \vspace{5mm}
 
@@ -377,8 +381,207 @@ not all diameters are possible.
 \linethickness{1pt}
     \multiput(0,0)(5,0){6}{\line(0,1){20}}
     \multiput(0,0)(0,5){5}{\line(1,0){25}}
-
 \end{picture}
 \vspace{5mm}
+
+%--------------------------------------
+\subsection{oval}
+\begin{verbatim}\put(x,y){\oval(w,h)[position:b,t,l,r]}\end{verbatim}
+
+\vspace{5mm}
+\setlength{\unitlength}{0.75cm}
+\begin{picture}(6,4)
+    \put(0,0){\circle*{0.2}}
+    \put(6,0){\circle*{0.2}}
+    \put(0,4){\circle*{0.2}}
+    \put(6,4){\circle*{0.2}}
+
+\linethickness{0.5pt}
+    \multiput(0,0)(1,0){7}{\line(0,1){4}}
+    \multiput(0,0)(0,1){5}{\line(1,0){6}}
+
+\thicklines
+    \put(2,3){\oval(3,1.8)}
+\thinlines
+    \put(3,2){\oval(3,1.8)}
+\thicklines
+    \put(2,1){\oval(3,1.8)[tl]}
+    \put(4,1){\oval(3,1.8)[b]}
+    \put(4,3){\oval(3,1.8)[r]}
+    \put(3,1.5){\oval(1.8,0.4)}
+\end{picture}
+\vspace{5mm}
+
+%--------------------------------------
+\subsection{Predefined picture boxes}
+\begin{verbatim}
+\newsavebox{name}
+\savebox{name}(width,height)[position]{content}
+\put(x,y){\usebox{name}}
+\end{verbatim}
+
+\vspace{5mm}
+\setlength{\unitlength}{0.5mm}
+\begin{picture}(120,168)
+    \put(0,0){\circle*{2}}
+    \put(120,0){\circle*{2}}
+    \put(0,168){\circle*{2}}
+    \put(120,168){\circle*{2}}
+
+\newsavebox{\foldera}
+\savebox{\foldera}(40,32)[bl]{% definition
+    \multiput(0,0)(0,28){2}{\line(1,0){40}}
+    \multiput(0,0)(40,0){2}{\line(0,1){28}}
+    \put(1,28){\oval(2,2)[tl]}
+    \put(1,29){\line(1,0){5}}
+    \put(9,29){\oval(6,6)[tl]}
+    \put(9,32){\line(1,0){8}}
+    \put(17,29){\oval(6,6)[tr]}
+    \put(20,29){\line(1,0){19}}
+    \put(39,28){\oval(2,2)[tr]}
+}
+
+\newsavebox{\folderb}
+\savebox{\folderb}(40,32)[l]{% definition
+    \put(0,14){\line(1,0){8}}
+    \put(8,0){\usebox{\foldera}}
+}
+
+    \put(34,26){\line(0,1){102}}
+    \put(14,128){\usebox{\foldera}}
+    \multiput(34,86)(0,-37){3}{\usebox{\folderb}}
+
+\end{picture}
+
+%--------------------------------------
+\subsection{Quadratic Bézier curves}
+\begin{verbatim}\qbezier(x1,y1)(x,y)(x2,y2)\end{verbatim}
+
+\newpage
+\setlength{\unitlength}{1pt}
+\begin{flushleft}
+\begin{picture}(345,550)(-10,-10)
+
+% border corners
+    \put(-10,-10){\circle*{5}}
+    \put(335,-10){\circle*{5}}
+    \put(-10,540){\circle*{5}}
+    \put(335,540){\circle*{5}}
+
+% grid
+\linethickness{0.25pt}
+    \multiput(0,0)(10,0){34}{\line(0,1){530}}
+    \multiput(0,0)(0,10){54}{\line(1,0){330}}
+\linethickness{0.5pt}
+    \multiput(0,0)(50,0){7}{\line(0,1){530}}
+    \multiput(0,0)(0,50){11}{\line(1,0){330}}
+\linethickness{1pt}
+    \multiput(0,0)(100,0){4}{\line(0,1){530}}
+    \multiput(0,0)(0,100){6}{\line(1,0){330}}
+
+    \put(-30,0){{\footnotesize $0$}}
+    \put(-30,100){{\footnotesize $100$}}
+    \put(-30,200){{\footnotesize $200$}}
+    \put(-30,300){{\footnotesize $300$}}
+    \put(-30,400){{\footnotesize $400$}}
+    \put(-30,500){{\footnotesize $500$}}
+    \put(-30,600){{\footnotesize $600$}}
+
+    \put(0,-20){{\footnotesize $0$}}
+    \put(100,-20){{\footnotesize $100$}}
+    \put(200,-20){{\footnotesize $200$}}
+    \put(300,-20){{\footnotesize $300$}}
+    \put(400,-20){{\footnotesize $400$}}
+
+% qbezier examples first column
+
+\linethickness{2pt}
+    \qbezier(0,400)(10,450)(0,500)
+    \thinlines
+    \put(0,400){\line(1,5){10}}
+    \put(10,450){\circle*{5}}
+    \put(0,500){\line(1,-5){10}}
+
+\linethickness{2pt}
+    \qbezier(0,400)(50,450)(0,500)
+    \thinlines
+    \put(0,400){\line(1,1){50}}
+    \put(50,450){\circle*{5}}
+    \put(0,500){\line(1,-1){50}}
+
+\linethickness{2pt}
+    \qbezier(50,400)(150,450)(50,500)
+    \thinlines
+    \put(50,400){\line(2,1){100}}
+    \put(150,450){\circle*{5}}
+    \put(50,500){\line(2,-1){100}}
+
+\linethickness{2pt}
+    \qbezier(0,300)(20,300)(0,400)
+    \thinlines
+    \put(0,300){\line(1,0){20}}
+    \put(20,300){\circle*{5}}
+    \put(0,400){\line(1,-5){20}}
+
+\linethickness{2pt}
+    \qbezier(0,200)(50,150)(0,300)
+    \thinlines
+    \put(0,200){\line(1,-1){50}}
+    \put(50,150){\circle*{5}}
+    \put(0,300){\line(1,-3){50}}
+
+\linethickness{2pt}
+    \qbezier(0,100)(50,0)(0,200)
+    \thinlines
+    \put(0,100){\line(1,-2){50}}
+    \put(50,0){\circle*{5}}
+    \put(0,200){\line(1,-4){50}}
+
+\linethickness{2pt}
+    \qbezier(0,0)(100,600)(0,100)
+    \thinlines
+    \put(0,0){\line(1,6){100}}
+    \put(100,600){\circle*{5}}
+    \put(0,100){\line(1,5){100}}
+
+% qbezier examples second column
+
+\linethickness{2pt}
+    \qbezier(100,400)(400,450)(100,500)
+    \thinlines
+    \put(100,400){\line(6,1){300}}
+    \put(400,450){\circle*{5}}
+    \put(100,500){\line(6,-1){300}}
+
+\linethickness{2pt}
+    \qbezier(100,300)(400,300)(100,400)
+    \thinlines
+    \put(100,300){\line(1,0){300}}
+    \put(400,300){\circle*{5}}
+    \put(100,400){\line(3,-1){300}}
+
+\linethickness{2pt}
+    \qbezier(100,200)(400,150)(100,300)
+    \thinlines
+    \put(100,200){\line(6,-1){300}}
+    \put(400,150){\circle*{5}}
+    \put(100,300){\line(2,-1){300}}
+
+\linethickness{2pt}
+    \qbezier(100,100)(400,0)(100,200)
+    \thinlines
+    \put(100,100){\line(3,-1){300}}
+    \put(400,0){\circle*{5}}
+    \put(100,200){\line(3,-2){300}}
+
+\linethickness{2pt}
+    \qbezier(100,0)(300,600)(100,100)
+    \thinlines
+    \put(100,0){\line(1,3){200}}
+    \put(300,600){\circle*{5}}
+    \put(100,100){\line(2,5){200}}
+
+\end{picture}
+\end{flushleft}
 
 \end{document}
