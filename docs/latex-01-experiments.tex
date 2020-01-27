@@ -5,7 +5,7 @@
 % a4paper for A4 (the standard in almost all the rest of the world)
 % twocolumn, twoside
 
-\usepackage{layout} % To print the current details plus the layout shape
+\usepackage{layout} % use \layout* to print the current details plus the layout shape
 
 \usepackage{showframe} % To render a frame marking the margins 
 
@@ -47,6 +47,9 @@
     showtabs=false,                  
     tabsize=2
 }
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 \title{\LaTeX{} Experiments}
 
@@ -310,6 +313,24 @@ def incmatrix(genl1,genl2):
 
 \newpage
 
+%==============================================================================
+\section{Inserting Images}
+\LaTeX can not manage images by itself, so we need to use the graphicx package. 
+To use it, we include the following line in the preamble: 
+\verb+\usepackage{graphicx}+
+
+The command \verb+\graphicspath{ {./images/} }+ tells \LaTeX that the images 
+are kept in a folder named images under the directory of the main document.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{cosmic-microwave-background}
+\caption{Cosmic Microwave Background, by Planck Space Telescope}
+\end{figure}
+
+\newpage
+
 \lstlistoflistings
+
+\listoffigures
 
 \end{document}
