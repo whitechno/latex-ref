@@ -1,0 +1,51 @@
+\documentclass[]{standalone}
+\usepackage{ifthen}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc,shapes.multipart,arrows}
+
+\tikzstyle{pointer}=[fill=black, circle, minimum width = 3pt, inner sep=0]
+\tikzstyle{link}=[>=stealth]
+\tikzstyle{array}=[draw, fill=green!40, minimum width = 7mm, minimum height = 7mm]
+\tikzstyle{list_node_horizontal}=[
+    draw, rectangle split, rectangle split parts=2, rectangle split horizontal,
+    rounded corners=2pt, minimum height=5mm, minimum width=10mm, 
+    node distance=5mm, fill=red!35
+]
+\tikzstyle{nil}=[draw, rectangle,minimum height=4mm, minimum width=4mm, node distance=5mm]
+
+\def\Adjacencylist#1{%
+  % Draw  Adjacency List
+  \foreach [count=\j] \element in \adlist {
+	  % a counter the refers to the previous node
+	  \prevnode=\j
+	  \advance\prevnode by -1
+	  % draw the node from the list with a pointer
+      \node[list_node_horizontal,right = of node\the\prevnode] (node\j) {\element};
+      \path[-] let \p1 = (node\j.two), \p2 = (node\j.center) in  
+				node[pointer] (rightpointer\j) at (\x1+2,\y2){};
+	  %draw incomming link from previous node
+      \draw[link,->] (rightpointer\the\prevnode) edge (node\j);
+   }
+   % Draw nil pointer
+   \node[nil, right = of rightpointer\j] (rightnil) {};
+   \draw (rightnil.north east) -- (rightnil.south west);
+   \draw (rightnil.north west) -- (rightnil.south east);
+   % Draw edge to nil pointer node
+   \path [link,->] (rightpointer\j) edge (rightnil);
+}
+
+\newcount\prevnode
+
+\begin{document}
+% Define graph as a list of pairs, where each pair consists of a node, 
+% the delimiter "/" and  the set of adjacent nodes.
+\newcommand{\inputgraph}{a/{d,b,d,e}, b/{c,a}, c/{b,d}, d/{a,a,c}, e/{a}}
+% Draw array and adjacency lists
+\begin{tikzpicture}
+\foreach [count=\i] \index/\adlist in \inputgraph {
+    \node[array] (rightpointer0) at (0,-\i*0.7) {\index};
+    \coordinate   (node0) at (0.4,-\i*0.7); 
+    \Adjacencylist{\adlist}
+}
+\end{tikzpicture}
+\end{document}

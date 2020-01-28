@@ -1,0 +1,15 @@
+% latex svg-output-example; dvisvgm svg-output-example
+\documentclass[border=10pt]{standalone}
+\usepackage{tikz}
+%\usetikzlibrary{er,positioning}
+
+\begin{document}
+\tikz \draw[step=2pt] (1pt,1pt) grid (9pt,9pt);
+\begin{tikzpicture}
+    \fill[orange] (-1.5,-1.5) circle (1pt);
+    \draw[step=.5cm,gray,very thin] (-1.4,-1.4) grid (1.4,1.4); 
+    \draw (-1.5,0) -- (1.5,0);
+    \draw (0,-1.5) -- (0,1.5);
+    \draw (0,0) circle [radius=1cm];
+\end{tikzpicture}
+\end{document}

@@ -1,4 +1,4 @@
-\documentclass[letterpaper]{article}
+\documentclass[letterpaper,dvipsnames]{article}
 %\documentclass[12pt, letterpaper, twoside]{article}
 % the default font size is 10pt
 % letterpaper for US Letter
@@ -20,9 +20,11 @@
 % \href{link}{name} or \url{link}
 \usepackage{hyperref}
 
+% to use colours
+\usepackage{xcolor}
+
 % Code formatting with the listing package is highly customizable.
 \usepackage{listings}
-\usepackage{xcolor}
  
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -163,6 +165,28 @@ For other (non-R) users:
     \item \url{http://texdoc.net/} TeXdoc is a \TeX and \LaTeX
           documentation lookup system.
 \end{itemize}
+
+%--------------------------------------
+\subsection{Using colours}
+ 
+This example shows different examples on how to use the \texttt{xcolor} package 
+to change the colour of elements in \LaTeX.
+ 
+\begin{itemize}
+\color{blue}
+    \item blue
+\color{cyan}
+    \item cyan
+\color{ForestGreen}
+    \item ForestGreen
+\color{RubineRed}
+    \item RubineRed
+\end{itemize}
+ 
+\begin{flushleft} \color{red} \rule{\linewidth}{1pt} \end{flushleft}
+
+Change the text color to \textcolor{red}{red}, or the background color to 
+\colorbox{BurntOrange}{BurntOrange}.
 
 %--------------------------------------
 \subsection{Units and page layout}

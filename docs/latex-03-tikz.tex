@@ -3,10 +3,16 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
+% epigraph for quote at start of section
+\usepackage{epigraph}
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+\renewcommand{\epigraphsize}{\small\itshape}
+
 % for hyperlinks and URL links
 \usepackage{hyperref}
 
-\title{\LaTeX{} Experiments\\ Part III: TikZ}
+\title{\LaTeX{} Experiments\\ Part III: PGF/TikZ}
 
 \author{AeAeA}
 
@@ -15,7 +21,11 @@
 \maketitle
 
 %==============================================================================
-\section{TikZ package}
+\section{TikZ ist {\itshape kein} Zeichenprogramm}
+
+\epigraph
+{Für meinen Vater, damit er noch viele schöne TEX-Graphiken erschaffen kann.}
+{--- \textup{Till Tantau}}
 
 \begin{tikzpicture}
     \draw[gray, thick, ->] (-1,2) -- (2,-4);
@@ -24,6 +34,16 @@
 \end{tikzpicture}
 
 \begin{itemize}
+    \item \url{https://en.wikipedia.org/wiki/PGF/TikZ}
+    \item \url{https://www.ctan.org/pkg/pgf}
+    \item \url{https://github.com/pgf-tikz/pgf}
+    \item \href{http://cremeronline.com/LaTeX/minimaltikz.pdf}
+               {Minimal introduction to TikZ (unofficial)}
+    \item  It comes with very good documentation; the version 3.1.5b of the 
+           \href{http://mirrors.ctan.org/graphics/pgf/base/doc/pgfmanual.pdf}
+                {PGF Manual} has over 1,300 pages (!) \ldots
+    \item \ldots and an extensive collection of examples: \\
+          \url{http://www.texample.net/tikz/}
     \item \url{https://en.wikibooks.org/wiki/LaTeX/PGF/TikZ}
     \item \url{https://www.overleaf.com/learn/latex/TikZ_package}
 \end{itemize}
@@ -58,9 +78,11 @@
 \subsection{Diagrams with nodes}
 
 \begin{tikzpicture}[
-    roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
-    squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
-    ]
+    roundnode/.style   = {circle, draw=green!60, fill=green!5, very thick, 
+                          minimum size=20pt},
+    squarednode/.style = {rectangle, draw=red!60, fill=red!5, very thick, 
+                          minimum size=15pt},
+]
     %Nodes
     \node[squarednode]      (maintopic)                              {2};
     \node[roundnode]        (uppercircle)       [above=of maintopic] {1};
@@ -70,8 +92,14 @@
     %Lines
     \draw[->] (uppercircle.south) -- (maintopic.north);
     \draw[->] (maintopic.east) -- (rightsquare.west);
-    \draw[->] (rightsquare.south) .. controls +(down:7mm) and +(right:7mm) .. (lowercircle.east);
+    \draw[->] (rightsquare.south) .. controls +(down:20pt) and +(right:20pt) .. (lowercircle.east);
 \end{tikzpicture}
 
+
+%--------------------------------------
+\subsection{Some other random examples}
+
+\tikz \draw[thick,rounded corners=8pt]
+    (0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);
 
 \end{document}
