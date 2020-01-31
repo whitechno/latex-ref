@@ -2,8 +2,11 @@
 
 \usepackage{tikz}
 \usetikzlibrary{
+    angles,
     arrows.meta,
     graphs,
+    intersections,
+    quotes,
     positioning
 }
 \usepackage{amsmath, amssymb} % for $\therefore e_{l} * e_{r} \implies e_{r}$
@@ -30,7 +33,7 @@
 
 \epigraph
 {Für meinen Vater, damit er noch viele schöne TEX-Graphiken erschaffen kann.}
-{--- \textup{Till Tantau}}
+{--- \textup{Till Tantau}, PGF Manual}
 
 \begin{tikzpicture}
     \draw[gray, thick, ->] (-1,2) -- (2,-4);
@@ -91,11 +94,26 @@ The code for the little "turned" ellipse
 \begin{tikzpicture}[>=Stealth]
     \draw[<->>,very thick] 
         (0,0) arc [start angle=0, end angle=315, x radius=1.75cm, y radius=1cm];
-    \draw[<<-,very thick] (1,0) -- (1.5cm,10pt) -- (2cm,0pt) -- (2.5cm,10pt);
 \end{tikzpicture}
 
 %--------------------------------------
 \subsection{Arrow tips}
+
+\marginpar{\texttt{Stealth}\\
+\tikz [>=Stealth] \draw[<<<<-,ultra thick] (0,0) -- (0.1pt,0);}
+
+\epigraph
+{Karl wonders whether such a military name for the arrow type is really necessary. 
+He is not really mollified when his son tells him that Microsoft’s PowerPoint 
+uses the same name. He decides to have his students discuss this at some point.}
+{--- \textup{Till Tantau}, PGF Manual}
+
+This is an example of \texttt{Stealth} arrow tip 
+\tikz [>=Stealth]
+    \draw[<<-,ultra thick] (1,0) -- (1.5cm,10pt) -- (2cm,0pt) -- (2.5cm,10pt);
+which is a “stealth-fighter-like”.
+
+All arrow tips:\\
 %  \usetikzlibrary {arrows.meta}
 \begin{tikzpicture} [->,very thick]
     \draw[>=Arc Barb]      (0,0) -- (0,10pt);
@@ -126,6 +144,10 @@ The code for the little "turned" ellipse
     \draw[>=Turned Square] (250pt,0) -- (250pt,10pt);
 \end{tikzpicture}
 
+\marginpar{\tikz \draw[-To,red,ultra thick] (0,0) -- (0.1pt,0);}
+(Almost) zero-length arrow: 
+\tikz \draw[-To,red,ultra thick] (0,0) -- (0.1pt,0);
+
 \subsubsection{Arrow Tip Kind \texttt{Implies}}
 \marginpar{$\therefore\\ e_{l} * e_{r} \implies e_{r}$}
 This arrow tip makes only sense in conjunction with the double option:
@@ -141,52 +163,6 @@ A typical use of this arrow tip is:\\
     "\alpha", "\beta", "\gamma";
     "\alpha" -> "\beta" -> "\gamma" -> "\alpha"
 };
-
-
-
-%--------------------------------------
-\subsection{Diagrams with nodes}
-
-\begin{tikzpicture}[
-    roundnode/.style   = {circle, draw=green!60, fill=green!5, very thick, 
-                          minimum size=20pt},
-    squarednode/.style = {rectangle, draw=red!60, fill=red!5, very thick, 
-                          minimum size=15pt},
-]
-    %Nodes
-    \node[squarednode]      (maintopic)                              {2};
-    \node[roundnode]        (uppercircle)       [above=of maintopic] {1};
-    \node[squarednode]      (rightsquare)       [right=of maintopic] {3};
-    \node[roundnode]        (lowercircle)       [below=of maintopic] {4};
-     
-    %Lines
-    \draw[->] (uppercircle.south) -- (maintopic.north);
-    \draw[->] (maintopic.east) -- (rightsquare.west);
-    \draw[->] (rightsquare.south) .. 
-              controls +(down:20pt) and +(right:20pt) 
-              .. (lowercircle.east);
-\end{tikzpicture}
-
-\subsubsection{Extracting Insights From Data diagram}
-\begin{tikzpicture}[
-    squarednode/.style = {rectangle, draw=orange!60!black, fill=orange!7, 
-                          very thick, 
-                          minimum size=15pt},
-    impliesarrow/.style = {double equal sign distance, -Implies}
-]
-  
-    \node[squarednode] (DK) {Domain Knowledge};
-    \node[squarednode] (SA) [below=of DK] {Schema \& Algorithms};
-    \node[squarednode] (SP) [right=of SA] {System Pipeline};
-    \node[squarednode] (EA) [above=of SP] {Exploratory Analysis};
-
-    \draw[impliesarrow] (DK.south) -- (SA.north);
-    \draw[impliesarrow] (SA.east) -- (SP.west);
-    \draw[impliesarrow] (SP.north) -- (EA.south);
-    \draw[impliesarrow] (EA.west) -- (DK.east);
-    % \draw[impliesarrow] (DA.north) .. controls +(up:30pt) and +(right:40pt) .. (DK.east);
-
-\end{tikzpicture}
 
 
 %--------------------------------------
@@ -215,6 +191,7 @@ A typical use of this arrow tip is:\\
 
 %--------------------------------------
 \subsection{Grid}
+\marginpar{\tikz \draw[step=2pt] (0,0) grid (10pt,10pt);}
 The code \verb+\tikz \draw[step=2pt] (0,0) grid (10pt,10pt);+ produces
 \tikz \draw[step=2pt] (0,0) grid (10pt,10pt);.
 
@@ -232,8 +209,11 @@ Here is a bigger grid:\\
 
 %--------------------------------------
 \subsection{Circle and curved path}
+\marginpar{0.555}
 0.555 is the magic number.\\
-\begin{tikzpicture}
+\begin{tikzpicture} [
+    dark green/.style = {green!50!black}
+]
     \draw[step=.5cm,gray,very thin] (-5.4,-5.4) grid (5.4,5.4); 
 
     \draw (-5.5,0) -- (5.5,0);
@@ -241,52 +221,46 @@ Here is a bigger grid:\\
 
     \draw[gray,thick] (0,0) circle [radius=5cm];
 
+    % 2.777 = 5 * 0.555(5)
+
     \fill[blue] (-5,2.777) circle (1pt) (-2.777,5) circle (1pt);
     \draw[blue,->] (-5,0) .. controls (-5,2.777) and (-2.777,5) .. (0,5);
 
     \fill[orange] (3,5) circle (1pt) (5,3) circle (1pt);
     \draw[orange,->] (0,5) .. controls (3,5) and (5,3) .. (5,0);
 
-    \fill[green] (5,-5) circle (1pt);
-    \draw[green,->] (5,0) .. controls (5,-5) .. (0,-5);
+    \fill[dark green] (5,-5) circle (1pt);
+    \draw[dark green,->] (5,0) .. controls (5,-5) .. (0,-5);
 
     \fill[red] (-2,-5) circle (1pt) (-5,-2) circle (1pt);
     \draw[red,->] (0,-5) .. controls (-2,-5) and (-5,-2) .. (-5,0);
 \end{tikzpicture}
 
 %--------------------------------------
-\subsection{Style}
-\tikzset{help lines/.style=very thin}
-\begin{tikzpicture}[
-    Karl's grid/.style ={help lines,color=#1!50},
-    Karl's grid/.default=blue
-]
-
-    \draw[Karl's grid]     (0,0) grid (1.5,2);
-    \draw[Karl's grid=red] (2,0) grid (3.5,2);
-\end{tikzpicture}
-
-%--------------------------------------
 \subsection{Clipping a path}
-Original drawing on the left, clipped drawing on the right:\\
+Original drawing on the left, clipped (and 1.4 scaled) drawing on the right:\\
 \begin{tikzpicture}
     \draw[step=.5cm,gray,very thin] (-1.4,-1.4) grid (1.4,1.4); 
     \draw (-1.5,0) -- (1.5,0);
     \draw (0,-1.5) -- (0,1.5);
-    \draw[thick] (0,0) circle [radius=1cm];
-    \draw (3mm,0mm) arc [start angle=0, end angle=30, radius=3mm];
+    \draw[thick] (0,0) circle (1);
+    \draw (0.3,0) arc [start angle=0, end angle=30, radius=0.3];
 \end{tikzpicture}
 \begin{tikzpicture}[scale=1.4]
-    \path[draw,clip] (0.5,0.5) circle (1cm);
+    \path[draw,clip] (0.5,0.5) circle (1);
     \draw[step=.5cm,gray,very thin] (-1.4,-1.4) grid (1.4,1.4); 
     \draw (-1.5,0) -- (1.5,0);
     \draw (0,-1.5) -- (0,1.5);
-    \draw[thick] (0,0) circle [radius=1cm];
-    \draw (3mm,0mm) arc [start angle=0, end angle=30, radius=3mm];
+    \draw[thick] (0,0) circle (1);
+    \draw (0.3,0) arc [start angle=0, end angle=30, radius=0.3];
 \end{tikzpicture}
 
 %--------------------------------------
 \subsection{Parabola and Sine}
+\marginpar{
+    \tikz \draw[x=1.57ex,y=1ex] (0,0) sin (1,1) cos (2,0) sin (3,-1) cos (4,0) 
+(0,1) cos (1,0) sin (2,-1) cos (3,0) sin (4,1);
+}
 Two parabolas 
 \tikz \draw[x=2ex,y=2ex] (-1,0) rectangle (1,1) (-1,1) parabola (0,0) parabola (1,1);
 and a parabola with placed bend 
@@ -313,6 +287,7 @@ the difference, consider the following example:\\
 
 %--------------------------------------
 \subsection{Shading}
+\marginpar{\tikz \shade[ball color=green] (.5,.5) circle (.5);}
 The default shading is a smooth transition from gray at the top 
 to white at the bottom:\\
 \tikz \shade (0,0) rectangle (2,1)  (3,0.5) circle (.5cm);
@@ -321,7 +296,8 @@ To specify different colors, you can use options:\\
 \begin{tikzpicture}[rounded corners,ultra thick]
     \shade[top color=yellow,bottom color=black] (0,0) rectangle +(2,1);
     \shade[left color=yellow,right color=black] (3,0) rectangle +(2,1);
-    \shadedraw[inner color=yellow,outer color=black,draw=yellow] (6,0) rectangle +(2,1); \shade[ball color=green] (9,.5) circle (.5cm);
+    \shadedraw[inner color=yellow,outer color=black,draw=yellow] (6,0) rectangle +(2,1); 
+    \shade[ball color=green] (9,.5) circle (.5);
 \end{tikzpicture}
 
 %--------------------------------------
@@ -333,6 +309,89 @@ To specify different colors, you can use options:\\
         \draw (2,0) -- (2,1);
     \end{scope}
     \draw (3,0) -- (3,1);
+\end{tikzpicture}
+
+%==============================================================================
+\section{A picture for Karl}
+
+%--------------------------------------
+\subsection{Style}
+\tikzset{help lines/.style=very thin}
+\begin{tikzpicture}[
+    Karl's grid/.style ={help lines,color=#1!50},
+    Karl's grid/.default=blue
+]
+
+    \draw[Karl's grid]     (0,0) grid (1.5,2);
+    \draw[Karl's grid=red] (2,0) grid (3.5,2);
+\end{tikzpicture}
+
+%--------------------------------------
+\subsection{Adding Text}
+\begin{tikzpicture}
+    \draw (0,0) rectangle (2,2);
+    \draw (0.5,0.5) node [fill=yellow!80!black]
+                           {Text at \verb!node 1!}
+         -- (1.5,1.5) node {Text at \verb!node 2!};
+\end{tikzpicture}
+
+If the label directly after the \verb+--+ and before the coordinate, 
+this places the label in the middle of the line, but the \verb+pos=+ 
+options can be used to modify this. Also, options like \verb+near start+ 
+and \verb+near end+ can be used to modify this position. You can also 
+position labels on curves and, by adding the \verb+sloped+ option, 
+have them rotated such that they match the line’s slope. 
+Here is an example:\\
+\begin{tikzpicture}
+    \draw (0,0) .. controls (6,1) and (9,1) ..
+      node[near start,sloped,above] {near start}
+      node {midway}
+      node[very near end,sloped,below] {very near end} (12,0);
+\end{tikzpicture}
+
+%--------------------------------------
+\subsection{Diagrams with nodes}
+
+\begin{tikzpicture}[
+    roundnode/.style   = {circle, draw=green!60, fill=green!5, very thick, 
+                          minimum size=20pt},
+    squarednode/.style = {rectangle, draw=red!60, fill=red!5, very thick, 
+                          minimum size=15pt},
+]
+    %Nodes
+    \node[squarednode]      (maintopic)                              {2};
+    \node[roundnode]        (uppercircle)       [above=of maintopic] {1};
+    \node[squarednode]      (rightsquare)       [right=of maintopic] {3};
+    \node[roundnode]        (lowercircle)       [below=of maintopic] {4};
+     
+    %Lines
+    \draw[->] (uppercircle.south) -- (maintopic.north);
+    \draw[->] (maintopic.east) -- (rightsquare.west);
+    \draw[->] (rightsquare.south) .. 
+              controls +(down:20pt) and +(right:20pt) 
+              .. (lowercircle.east);
+\end{tikzpicture}
+
+\subsubsection{Extracting Insights From Data diagram}
+\begin{tikzpicture}[
+    squarednode/.style = {rectangle, draw=orange!60!black, fill=orange!7, 
+                          very thick, 
+                          minimum size=20pt,
+                          rounded corners=2pt},
+    impliesarrow/.style = {double equal sign distance, -Implies}
+]
+  
+    \node[squarednode] (DK) {Domain Knowledge};
+    \node[squarednode] (SA) [below=of DK] {Schema \& Algorithms};
+    \node[squarednode] (SP) [right=of SA] {System Pipeline}; 
+    \node[squarednode] (EA) [above=of SP] {Exploratory Analysis};
+
+    \draw[impliesarrow] (DK.south) -- (SA.north);
+    \draw[impliesarrow] (SA.east) -- (SP.west);
+    \draw[impliesarrow] (SP.north) -- (EA.south);
+    \draw[impliesarrow] (EA.west) -- (DK.east);
+    % \draw[impliesarrow] (DA.north) .. controls +(up:30pt) and +(right:40pt) .. (DK.east);
+
 \end{tikzpicture}
 
 %--------------------------------------
@@ -357,11 +416,15 @@ By comparison, when using a single +, the coordinates are different:\\
 \subsection{Transformations}
 \tikz \draw (0,0) -- (0,0.5) [xshift=20pt] (0,0) -- (0,0.5);
 
+\marginpar{
 \begin{tikzpicture}[even odd rule,rounded corners=2pt,x=10pt,y=10pt] 
-    \filldraw[fill=yellow!80!black] (0,0) rectangle (1,1) 
-            [xshift=5pt,yshift=5pt] (0,0) rectangle (1,1)
-                      [rotate=30] (-1,-1) rectangle (2,2);
+    \filldraw[fill=yellow!80!black]   (0,0) rectangle (1,1) 
+                [shift={(0.5,0.5)}]   (0,0) rectangle (1,1)
+                        [rotate=30] (-1,-1) rectangle (2,2) 
+                                      (0,0) circle (0.2) 
+                  [shift={(-1,-1)}]   (0,0) circle (0.4);
 \end{tikzpicture}
+}
 
 Another way to display all options for arrow tips:\\
 \begin{tikzpicture}
@@ -372,7 +435,7 @@ Another way to display all options for arrow tips:\\
     \draw[>=To,red]                         [xshift=-30pt] \arrowup;
     \draw[>=Computer Modern Rightarrow,red] [xshift=-20pt] \arrowup;
     \draw[>=Classical TikZ Rightarrow]      [xshift=-10pt] \arrowup;
-
+    \draw (0,5pt) circle (5pt); % circle to mark Arc Barb
     \draw[>=Arc Barb]                    \arrowup;
     \draw[>=Bar]           [xshift=10pt] \arrowup;
     \draw[>=Bracket]       [xshift=20pt] \arrowup;
@@ -400,5 +463,105 @@ Another way to display all options for arrow tips:\\
     \draw[>=Triangle Cap]  [xshift=240pt] \arrowup;
     \draw[>=Turned Square] [xshift=250pt] \arrowup;
 \end{tikzpicture}
+
+\newpage
+%--------------------------------------
+\subsection{Repeating Things: For-Loops}
+
+\foreach \i/\t in {
+    1/Arc Barb, 2/Bar, 3/Bracket, 4/Butt Cap, 5/Circle, 
+    6/Diamond, 7/Ellipse, 8/Fast Round, 9/Fast Triangle, 
+    10/Hooks, 11/Implies, 12/Kite, 13/LaTeX, 14/Latex, 
+    15/Parenthesis, 16/Rays, 17/Rectangle, 18/Round Cap, 
+    19/Square, 20/Stealth, 21/Straight Barb, 22/Tee Barb, 
+    23/To, 24/Triangle, 25/Triangle Cap, 26/Turned Square} 
+    {\i. \tikz [>=\t] \draw[->,ultra thick] (0,0) -- (15pt,0); \t \\}
+
+\foreach \x in {1,2,3} {$x =\x$, }
+
+\tikz  \foreach \x in {-1,-0.5,...,1} \draw[shift={(\x,0)}] (0,-5pt) -- (0,5pt);
+
+\tikz \foreach \x in {1,...,10} \draw (\x,0) circle (0.4);
+
+\subsubsection{2D tables}
+\begin{tikzpicture}
+    \filldraw[fill=yellow!80!black] (6,1) circle (2pt);
+    \foreach \x in {1,2,...,5,7,8,...,12}
+        \foreach \y in {1,...,5}
+        {
+            \draw (\x,\y) +(-.5,-.5) rectangle ++(.5,.5);
+            \draw (\x,\y) node{\x,\y};
+        }
+\end{tikzpicture}
+
+%--------------------------------------
+\subsection{Karl's picture}
+\marginpar{\begin{tikzpicture}
+    \coordinate (A) at (2,0);
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (30:2);
+    \draw (A) -- (B) -- (C)
+        pic [draw=green!50!black, fill=green!20, angle radius=9mm, "$\alpha$"] 
+            {angle = A--B--C};
+\end{tikzpicture}}
+
+\begin{tikzpicture}
+    [scale=2.5,line cap=round,
+    % Styles
+    axes/.style=,
+    grid lines/.style={gray,very thin},
+    important line/.style={very thick},
+    information text/.style={rounded corners,fill=red!10,inner sep=1ex}]
+
+    % Colors
+    \colorlet{anglecolor}{green!50!black}
+    \colorlet{sincolor}{red}
+    \colorlet{tancolor}{orange!80!black}
+    \colorlet{coscolor}{blue}
+
+    % The graphic
+    \draw[grid lines,step=.5] (-1.4,-1.4) grid (1.4,1.4);
+    \draw (0,0) circle [radius=1cm];
+
+    \begin{scope}[axes]
+        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$} coordinate(x axis);
+        \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$} coordinate(y axis);
+
+        \foreach \x/\xtext in {-1, -.5/-\frac{1}{2}, 1}
+            \draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+        \foreach \y/\ytext in {-1, -.5/-\frac{1}{2}, .5/\frac{1}{2}, 1}
+            \draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white] {$\ytext$};
+    \end{scope}
+
+    \filldraw[fill=green!20,draw=anglecolor] 
+        (0,0) -- (3mm,0pt) arc [start angle=0, end angle=30, radius=3mm];
+    \draw (15:2mm) node[anglecolor] {$\alpha$};
+    
+    \draw[important line,sincolor]
+        (30:1cm) -- node[left=1pt,fill=white] {$\sin \alpha$} (30:1cm |- x axis); 
+
+    \draw[important line,coscolor]
+    (30:1cm |- x axis) -- node[below=2pt,fill=white] {$\cos \alpha$} (0,0);
+
+    % to find tan(30) "geometrically", as an intersection of two lines:
+    \path [name path=upward line] (1,0) -- (1,1);
+    \path [name path=sloped line] (0,0) -- (30:1.5cm);
+    \draw [name intersections={of=upward line and sloped line, by=t}]
+          [very thick,orange] (1,0) -- node [right=1pt,fill=white] 
+          {$\displaystyle \tan \alpha \color{black}=
+          \frac{{\color{red}\sin \alpha}}{\color{blue}\cos \alpha}$} (t);
+    \draw (0,0) -- (t);
+    
+    % text area to the left:
+    \draw[xshift=-1.55cm] 
+        node[left,text width=3cm,information text] {
+            The {\color{anglecolor} angle $\alpha$} is $30^\circ$ in the
+            example ($\pi/6$ in radians). The {\color{sincolor}sine of
+            $\alpha$}, which is the height of the red line, is
+            \[ {\color{sincolor} \sin \alpha} = 1/2. \]
+            By the Theorem of Pythagoras ...
+        };
+\end{tikzpicture}
+
 
 \end{document}
