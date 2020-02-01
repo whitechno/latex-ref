@@ -313,6 +313,8 @@ To specify different colors, you can use options:\\
     \draw (3,0) -- (3,1);
 \end{tikzpicture}
 
+
+\newpage
 %==============================================================================
 \section{A picture for Karl}
 
@@ -385,7 +387,7 @@ Here is an example:\\
   
     \node[squarednode] (DK) {Domain Knowledge};
     \node[squarednode] (SA) [below=of DK] {Schema \& Algorithms};
-    \node[squarednode] (SP) [right=of SA] {System Pipeline}; 
+    \node[squarednode] (SP) [right=of SA] {Production System}; 
     \node[squarednode] (EA) [above=of SP] {Exploratory Analysis};
 
     \draw[impliesarrow] (DK.south) -- (SA.north);
@@ -564,6 +566,5 @@ Another way to display all options for arrow tips:\\
             By the Theorem of Pythagoras ...
         };
 \end{tikzpicture}
-
 
 \end{document}
