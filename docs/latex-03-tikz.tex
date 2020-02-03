@@ -6,6 +6,7 @@
 \usetikzlibrary{
     angles,
     arrows.meta,
+    automata, % to use \node[state]
     graphs,
     intersections,
     quotes,
@@ -30,18 +31,22 @@
 
 \maketitle
 
+\vspace{20pt}
+
+\begin{figure}[h] \centering
+    \begin{tikzpicture}
+        \draw[gray, thick, ->] (-1,2) -- (2,-4);
+        \draw[gray, thick] (-1,-1) -- (2,2);
+        \filldraw[black] (0,0) circle (2pt) node[anchor=west] {Intersection point};
+    \end{tikzpicture}
+\end{figure}
+
 %==============================================================================
 \section{TikZ ist {\itshape kein} Zeichenprogramm}
 
 \epigraph
 {Für meinen Vater, damit er noch viele schöne TEX-Graphiken erschaffen kann.}
 {--- \textup{Till Tantau}, PGF Manual}
-
-\begin{tikzpicture}
-    \draw[gray, thick, ->] (-1,2) -- (2,-4);
-    \draw[gray, thick] (-1,-1) -- (2,2);
-    \filldraw[black] (0,0) circle (2pt) node[anchor=west] {Intersection point};
-\end{tikzpicture}
 
 \begin{itemize}
     \item \url{https://en.wikipedia.org/wiki/PGF/TikZ}
@@ -57,6 +62,8 @@
     \item \url{https://en.wikibooks.org/wiki/LaTeX/PGF/TikZ}
     \item \url{https://www.overleaf.com/learn/latex/TikZ_package}
 \end{itemize}
+
+
 
 %--------------------------------------
 \subsection{Basic elements: points, lines and paths}
@@ -176,7 +183,7 @@ A typical use of this arrow tip is:\\
 %--------------------------------------
 \subsection{Curved path}
 
-\begin{tikzpicture}[scale=3]
+\begin{tikzpicture}[scale=2]
     \filldraw[gray] (0,0) circle [radius=2pt]
                     (1,1) circle [radius=2pt] 
                     (2,1) circle [radius=2pt] 
@@ -189,6 +196,10 @@ A typical use of this arrow tip is:\\
 
     \filldraw[blue] (2,2) circle [radius=2pt];
     \draw[blue] (0,0) .. controls (2,2) .. (2,0);
+
+    \filldraw[red] (3,2) circle [radius=2pt]
+                   (-1,2) circle [radius=2pt];                
+    \draw[red] (0,0) .. controls (3,2) and (-1,2) .. (2,0);
 \end{tikzpicture}
 
 %--------------------------------------
@@ -357,7 +368,7 @@ Here is an example:\\
 \subsection{Diagrams with nodes}
 
 \begin{tikzpicture}[
-    roundnode/.style   = {circle, draw=green!60, fill=green!5, very thick, 
+    roundnode/.style   = {circle, draw=green!60!black, fill=green!5, very thick, 
                           minimum size=20pt},
     squarednode/.style = {rectangle, draw=red!60, fill=red!5, very thick, 
                           minimum size=15pt},
@@ -565,6 +576,119 @@ Another way to display all options for arrow tips:\\
             \[ {\color{sincolor} \sin \alpha} = 1/2. \]
             By the Theorem of Pythagoras ...
         };
+\end{tikzpicture}
+
+
+\newpage
+%==============================================================================
+\section{Nodes}
+
+\begin{tikzpicture}
+    \fill (0,0) circle (1pt);
+    \path ( 0,2) node [shape=circle,draw] {}
+          ( 0,1) node [shape=circle,draw] {}
+          ( 0,0) node [shape=circle,draw] {}
+          ( 1,1) node [shape=rectangle,draw] {}
+          (-1,1) node [shape=rectangle,draw] {};
+  \end{tikzpicture}
+
+%--------------------------------------
+\subsection{Placing Nodes Using the At Syntax}
+
+\begin{tikzpicture} [
+    place/.style      = {circle,draw=blue!50,fill=blue!20,thick},
+    transition/.style = {rectangle,draw=black!50,fill=black!20,thick}
+] 
+    \node at ( 0,2) [place] {};
+    \node at ( 0,1) [place] {};
+    \node at ( 0,0) [place] {};
+    \node at ( 1,1) [transition] {};
+    \node at (-1,1) [transition] {};
+\end{tikzpicture}
+
+%--------------------------------------
+\subsection{Node size, name and style}
+
+\begin{tikzpicture} [inner sep=2mm,
+    place/.style={circle,draw=blue!50,fill=blue!20,thick,
+                  inner sep=0pt,minimum size=6mm},
+    transition/.style={rectangle,draw=black!50,fill=black!20,thick,
+                  inner sep=0pt,minimum size=4mm}
+] 
+    \node[place]      (waiting 1)      at ( 0,2) {};
+    \node[place]      (critical 1)     at ( 0,1) {};
+    \node[place]      (semaphore)      at ( 0,0) {};
+    \node[transition] (leave critical) at ( 1,1) {};
+    \node[transition] (enter critical) at (-1,1) {};
+\end{tikzpicture}
+
+%--------------------------------------
+\subsection{Labels and pins for nodes, and nodes as labels}
+
+\tikz [
+    every label/.style={draw,red,label distance=5mm},
+    pin distance=1.5cm
+] \node [
+    circle,draw,
+    pin = right:X,
+    pin = above:Y,
+    pin = below left:Z,
+    label = center:*,
+    label = 60:$60^\circ$,
+    label = 105:$105^\circ$,
+    label = 175:$175^\circ$,
+    label = -40:$-40^\circ$,
+    label = -95:$-95^\circ$,
+    label = -170:$-170^\circ$
+] {my circle};
+
+
+%--------------------------------------
+\subsection{Gallery}
+
+\begin{tikzpicture}
+    [scale=.8,auto=left,every node/.style={circle,fill=blue!20}] 
+    \node (a) at (-1,-2) {a};
+    \node (b) at ( 1,-2) {b};
+    \node (c) at ( 2,-1) {c};
+    \node (d) at ( 2, 1) {d};
+    \node (e) at ( 1, 2) {e};
+    \node (f) at (-1, 2) {f};
+    \node (g) at (-2, 1) {g};
+    \node (h) at (-2,-1) {h};
+    
+    \foreach \from/\to in {a/b,b/c,c/d,d/e,e/f,f/g,g/h,h/a}
+        \draw [->] (\from) -- (\to) node[midway,fill=red!20] {\from--\to}; 
+\end{tikzpicture}
+
+\vspace{20pt}
+
+\begin{tikzpicture}[auto]
+    \draw[help lines,use as bounding box] (0,-.5) grid (4,5);
+    \draw (0.5,0) .. controls (9,6) and (-5,6) .. (3.5,0)
+        node foreach \pos in {0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
+            [pos=\pos,swap,fill=red!20] {\pos}
+        node foreach \pos in {0.025,0.2,0.4,0.6,0.8,0.975}
+            [pos=\pos,fill=blue!20] {\pos}; 
+\end{tikzpicture}
+
+\vspace{20pt}
+
+% \usetikzlibrary {automata}
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,auto]
+    \draw[help lines] (0,0) grid (3,2);
+  
+    \node[state] (q_0) {$q_0$}; 
+    \node[state] (q_1) [above right of=q_0] {$q_1$}; 
+    \node[state] (q_2) [below right of=q_0] {$q_2$}; 
+    \node[state] (q_3) [below right of=q_1] {$q_3$};
+    
+    \path[->] (q_0) edge              node        {0} (q_1)
+                    edge              node [swap] {1} (q_2)
+              (q_1) edge              node        {1} (q_3)
+                    edge [loop above] node        {0} ()
+              (q_2) edge              node [swap] {0} (q_3)
+                    edge [loop below] node        {1} ();
 \end{tikzpicture}
 
 \end{document}
