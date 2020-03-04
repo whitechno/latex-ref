@@ -242,12 +242,12 @@ This has made a lot of people very angry and been widely regarded as a bad move.
 % M1
 \begin{scope}[xshift=3cm]
 
-    \node [place]     (w1')                                                   {};
-    \node [place,tokens=1]              (c1') [below=of w1']                                    {};
-    \node [red place,tokens=2]          (s1') [below=of c1',xshift=-5mm] [label=left:$s$]       {};
+    \node [place]              (w1')                                                   {};
+    \node [place,tokens=1]     (c1') [below=of w1']                                    {};
+    \node [red place,tokens=2] (s1') [below=of c1',xshift=-5mm] [label=left:$s$]       {};
     \node [red place,tokens=1] (s2') [below=of c1',xshift=5mm]  [label=right:$\bar s$] {};
-    \node [place,tokens=1]              (c2') [below=of s1',xshift=5mm]                         {};
-    \node [place]     (w2') [below=of c2']                                    {};
+    \node [place,tokens=1]     (c2') [below=of s1',xshift=5mm]                         {};
+    \node [place]              (w2') [below=of c2']                                    {};
 
     \node [transition] (e1') [left=of c1']  {}
         edge [pre,bend left]                  (w1')
@@ -309,10 +309,10 @@ This has made a lot of people very angry and been widely regarded as a bad move.
 \begin{scope}[xshift=9cm]
 
     \node [place,tokens=1]     (w1')                                                   {};
-    \node [place,tokens=1]              (c1') [below=of w1']                                    {};
-    \node [red place,tokens=2]          (s1') [below=of c1',xshift=-5mm] [label=left:$s$]       {};
+    \node [place,tokens=1]     (c1') [below=of w1']                                    {};
+    \node [red place,tokens=2] (s1') [below=of c1',xshift=-5mm] [label=left:$s$]       {};
     \node [red place,tokens=1] (s2') [below=of c1',xshift=5mm]  [label=right:$\bar s$] {};
-    \node [place,tokens=1]              (c2') [below=of s1',xshift=5mm]                         {};
+    \node [place,tokens=1]     (c2') [below=of s1',xshift=5mm]                         {};
     \node [place,tokens=1]     (w2') [below=of c2']                                    {};
 
     \node [transition] (e1') [left=of c1']  {}

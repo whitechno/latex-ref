@@ -571,7 +571,8 @@ Another way to display all options for arrow tips:\\
     \draw[xshift=-1.55cm] 
         node[left,text width=3cm,information text] {
             The {\color{anglecolor} angle $\alpha$} is $30^\circ$ in the
-            example ($\pi/6$ in radians). The {\color{sincolor}sine of
+            example ($\pi/6$ in radians). 
+            The {\color{sincolor}sine of
             $\alpha$}, which is the height of the red line, is
             \[ {\color{sincolor} \sin \alpha} = 1/2. \]
             By the Theorem of Pythagoras ...
@@ -623,7 +624,7 @@ Another way to display all options for arrow tips:\\
 \end{tikzpicture}
 
 %--------------------------------------
-\subsection{Labels and pins for nodes, and nodes as labels}
+\subsection{Labels and pins}
 
 \tikz [
     every label/.style={draw,red,label distance=5mm},
@@ -642,6 +643,16 @@ Another way to display all options for arrow tips:\\
     label = -170:$-170^\circ$
 ] {my circle};
 
+
+%--------------------------------------
+\subsection{Node with tabular text}
+
+\tikz \node [draw] {
+    \begin{tabular}{cc}
+        upper left & upper right\\
+        lower left & lower right
+    \end{tabular}
+};
 
 %--------------------------------------
 \subsection{Gallery}
